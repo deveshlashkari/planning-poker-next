@@ -1,36 +1,146 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Planning Poker
+
+A real-time planning poker app for agile teams. Create a session, share the link, and let your team vote using Fibonacci cards — no sign-up required.
+
+Built with **Next.js 16**, **Firebase Firestore**, **Framer Motion**, and **Tailwind CSS v4**.
+
+---
+
+## Features
+
+- **Instant sessions** — create a room in one click and share the link
+- **Real-time sync** — votes and reveals update live for everyone via Firestore `onSnapshot`
+- **No accounts** — players join by name only
+- **Host controls** — reveal cards, start a new round, or close the session
+- **Light & dark mode** — toggleable, persisted to `localStorage`
+- **Fully responsive** — works on desktop, tablet, and mobile
+- **Animated UI** — star field background, card flip animations, spring-based interactions
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Database | Firebase Firestore |
+| Styling | Tailwind CSS v4 |
+| Animations | Framer Motion |
+| Particles | tsparticles |
+| Icons | Lucide React |
+| Deployment | Vercel |
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/YOUR_USERNAME/planning-poker-next.git
+cd planning-poker-next
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up environment variables
+
+Copy the example file and fill in your Firebase credentials:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Where to find it |
+|---|---|
+| `NEXT_PUBLIC_FIREBASE_*` | Firebase Console → Project Settings → General → Your apps |
+| `FIREBASE_PROJECT_ID` | Firebase Console → Project Settings → General |
+| `FIREBASE_CLIENT_EMAIL` | Firebase Console → Project Settings → Service accounts → Generate new private key |
+| `FIREBASE_PRIVATE_KEY` | Same JSON file as above |
+
+### 4. Set up Firestore security rules
+
+In **Firebase Console → Firestore → Rules**, paste:
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /sessions/{sessionId} {
+      allow read: if true;   // client SDK needs read access for real-time updates
+      allow write: if false; // all writes go through server-side API routes (Admin SDK)
+    }
+  }
+}
+```
+
+### 5. Run the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment on Vercel
 
-## Learn More
+1. Push the repo to GitHub
+2. Import it at [vercel.com/new](https://vercel.com/new)
+3. Add all environment variables from `.env.example` in **Vercel → Project → Settings → Environment Variables**
 
-To learn more about Next.js, take a look at the following resources:
+> **Important for `FIREBASE_PRIVATE_KEY`**: Paste the key with **real newlines**, not `\n` literals. Copy the value from the downloaded JSON file directly — Vercel preserves line breaks in the dashboard.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The share link uses `window.location.origin` so it automatically resolves to your Vercel domain after deployment.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+app/
+├── api/
+│   └── sessions/          # REST API routes (create, join, vote, reveal, reset, delete)
+│       ├── route.ts        # POST /api/sessions
+│       └── [id]/
+│           ├── route.ts    # GET, DELETE /api/sessions/:id
+│           ├── join/       # POST /api/sessions/:id/join
+│           ├── vote/       # POST /api/sessions/:id/vote
+│           └── control/    # POST /api/sessions/:id/control (reveal / reset)
+├── session/[id]/
+│   └── page.tsx            # Session room (join screen + voting room)
+├── page.tsx                # Home / create session
+├── layout.tsx              # Root layout with theme toggle
+└── globals.css             # Tailwind base + dark mode variant
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+components/
+├── deck.tsx                # Fibonacci card row
+├── player-grid.tsx         # Player cards arranged around the table
+├── session-actions.tsx     # Host controls (reveal, new round, close)
+├── star-background.tsx     # Animated star/particle background (dark mode only)
+├── theme-toggle.tsx        # Light / dark mode button
+└── ui/                     # Shared primitives (Button, Input, Badge, Card)
+
+hooks/
+├── useIdentity.ts          # Persists player identity in localStorage
+├── useSession.ts           # Real-time Firestore subscription
+└── useTheme.ts             # Theme toggle with localStorage persistence
+
+lib/
+├── firebase.ts             # Client-side Firebase SDK init
+└── firebase-admin.ts       # Server-side Firebase Admin SDK init
+
+services/
+└── sessions.ts             # Client-side fetch wrappers for all API routes
+```
+
+---
+
+## License
+
+MIT
