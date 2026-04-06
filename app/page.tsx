@@ -106,6 +106,24 @@ export default function HomePage() {
         </motion.form>
 
       </div>
+
+      {/* Footer — pinned to the bottom of the viewport on every screen size */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="fixed bottom-4 left-0 right-0 z-10 flex items-center justify-center gap-1.5 text-md text-slate-500 dark:text-slate-500"
+      >
+        Made with
+        <motion.span
+          animate={{ scale: [1, 1.4, 1] }}
+          transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" }}
+          className="text-rose-500"
+        >
+          ❤️
+        </motion.span>
+        by Cursor using Claude Sonnet 4.6 — for the mankind
+      </motion.p>
     </main>
   );
 }
