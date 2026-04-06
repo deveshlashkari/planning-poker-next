@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "Planning Poker Online",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="h-full dark">
+      <SpeedInsights />
       <head>
         {/* Runs synchronously before paint to prevent flash of wrong theme */}
         <script
