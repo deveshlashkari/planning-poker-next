@@ -14,6 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="h-full dark">
       <SpeedInsights />
+      <Analytics />
       <head>
         {/* Runs synchronously before paint to prevent flash of wrong theme */}
         <script
