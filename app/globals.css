@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode: applies dark: variants when an ancestor has class="dark" */
+@custom-variant dark (&:where(.dark, .dark *));
+
+html,
+body,
+:root {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased;
+  /* Smooth transition when toggling theme */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Let the sticky deck clear the iOS home bar */
+.deck-sticky {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
