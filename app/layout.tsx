@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Planning Poker Online",
