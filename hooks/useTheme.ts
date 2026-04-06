@@ -17,12 +17,9 @@ export function useTheme() {
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    // Read stored preference, fall back to system preference
+    // Read stored preference, fall back to dark by default
     const stored = localStorage.getItem("theme") as Theme | null;
-    const system = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-    const initial = stored ?? system;
+    const initial = stored ?? "dark";
     setTheme(initial);
     applyTheme(initial);
   }, []);

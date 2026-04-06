@@ -18,9 +18,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: `
               (function() {
                 try {
-                  var stored = localStorage.getItem('theme');
-                  var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                  var theme = stored || system;
+                  var theme = localStorage.getItem('theme') || 'dark';
                   if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
                   } else {
