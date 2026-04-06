@@ -33,41 +33,41 @@ type SizeConfig = {
 function getSizeConfig(count: number): SizeConfig {
   if (count <= 4)
     return {
-      card: "h-20 w-14",
-      cardText: "text-sm",
-      avatar: "h-9 w-9",
-      avatarText: "text-[11px]",
-      nameText: "text-[11px]",
-      nameMax: "max-w-[80px]",
+      card: "h-28 w-20",
+      cardText: "text-lg",
+      avatar: "h-12 w-12",
+      avatarText: "text-sm",
+      nameText: "text-sm",
+      nameMax: "max-w-[100px]",
       gap: "gap-4",
     };
   if (count <= 8)
     return {
-      card: "h-16 w-11",
-      cardText: "text-xs",
-      avatar: "h-8 w-8",
-      avatarText: "text-[10px]",
-      nameText: "text-[10px]",
-      nameMax: "max-w-[68px]",
+      card: "h-24 w-16",
+      cardText: "text-base",
+      avatar: "h-11 w-11",
+      avatarText: "text-[13px]",
+      nameText: "text-[13px]",
+      nameMax: "max-w-[88px]",
       gap: "gap-3",
     };
   if (count <= 12)
     return {
-      card: "h-13 w-9",
-      cardText: "text-[11px]",
-      avatar: "h-7 w-7",
-      avatarText: "text-[9px]",
-      nameText: "text-[9px]",
-      nameMax: "max-w-[56px]",
+      card: "h-20 w-13",
+      cardText: "text-sm",
+      avatar: "h-9 w-9",
+      avatarText: "text-[11px]",
+      nameText: "text-[11px]",
+      nameMax: "max-w-[72px]",
       gap: "gap-2.5",
     };
   return {
-    card: "h-11 w-8",
-    cardText: "text-[10px]",
-    avatar: "h-6 w-6",
-    avatarText: "text-[8px]",
-    nameText: "text-[8px]",
-    nameMax: "max-w-[48px]",
+    card: "h-16 w-11",
+    cardText: "text-xs",
+    avatar: "h-8 w-8",
+    avatarText: "text-[10px]",
+    nameText: "text-[10px]",
+    nameMax: "max-w-[60px]",
     gap: "gap-2",
   };
 }
